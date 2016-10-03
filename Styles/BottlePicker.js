@@ -16,11 +16,15 @@ export default Style = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     backgroundColor: '#ffffff',
+    left: 0,
+    right: 0,
+    fontFamily: 'System',
+    fontSize: 14,
   },
   text: {
     // textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontFamily: 'System',
+    fontSize: 18,
     marginBottom: 5,
     color: '#585858'
   }

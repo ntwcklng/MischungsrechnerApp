@@ -13,8 +13,11 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
+
+
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default class MischungsrechnerContent extends Component {
   constructor() {
@@ -23,18 +26,31 @@ export default class MischungsrechnerContent extends Component {
       bottleValue: '',
       part1Value: '',
       part2Value: '',
-      bumpedUp: false
+      behavior: 'position'
     };
     this._ResultViewPress = this._ResultViewPress.bind(this);
     this.part1ValueChange = this.part1ValueChange.bind(this);
     this.part2ValueChange = this.part2ValueChange.bind(this);
     this.bottlePickerValueChange = this.bottlePickerValueChange.bind(this);
     this._resetResult = this._resetResult.bind(this);
+    this._partPickerFocus = this._partPickerFocus.bind(this);
+    this._bottlePickerFocus = this._bottlePickerFocus.bind(this);
+  }
+  _partPickerFocus() {
+    // this.setState({
+    //   behavior: 'padding'
+    // });
+  }
+  _bottlePickerFocus() {
+    // this.setState({
+    //   behavior: 'position'
+    // });
   }
   _ResultViewPress() {
-    this.props.navi.push({
+    this.props.navigator.push({
       title: 'Mischungsverhältnis',
       component: ResultView,
+      id: 'result',
       passProps: { result: calc[0], bottle: this.state.bottleValue, part1: this.state.part1Value, part2: this.state.part2Value }
     });
   }
@@ -95,8 +111,10 @@ export default class MischungsrechnerContent extends Component {
     }
     var resultOpacity = (calc[0] != 0) ? true : false;
     return (
-      <View style={[Styles.container, this.state.bumpedUp && {marginBottom: 220, marginTop: -220}]}>
+      <KeyboardAwareScrollView>
+      <View style={Styles.container}>
         <PartPicker
+            onFocus={this._partPickerFocus}
             val1Change={(value) => this.part1ValueChange(value)}
             val2Change={(value) => this.part2ValueChange(value)}
             part1Value={this.state.part1Value}
@@ -104,12 +122,13 @@ export default class MischungsrechnerContent extends Component {
         />
         <View style={Styles.hr} />
         <BottlePicker
+            onFocus={this._bottlePickerFocus}
             bottlePickerValueChange={this.bottlePickerValueChange}
             bottleValue={this.state.bottleValue}
-            bump={this.handleBump}
         />
         {resultOpacity && <Result result={calc[0]} handlePress={this._ResultViewPress} handlePressReset={this._resetResult}/>}
       </View>
+      </KeyboardAwareScrollView>
     );
   }
 };

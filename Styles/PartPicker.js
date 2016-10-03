@@ -4,6 +4,12 @@ import {
 } from 'react-native';
 
 export default Style = StyleSheet.create({
+  horizontalBtns: {
+    margin: 2,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: '#44bcff',
+  },
   container: {
     paddingTop: 0,
     paddingBottom: 10
@@ -14,12 +20,14 @@ export default Style = StyleSheet.create({
     height: 40,
     padding: 10,
     marginBottom: 20,
-    backgroundColor: '#ffffff'
+    backgroundColor: '#ffffff',
+    fontFamily: 'System',
+    fontSize: 14,
   },
   text: {
-    // textAlign: 'center',
-    fontWeight: 'bold',
-    fontSize: 14,
+    textAlign:'center',
+    fontFamily: 'System',
+    fontSize: 18,
     marginBottom: 5,
     color: '#585858'
   }

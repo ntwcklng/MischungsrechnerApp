@@ -18,20 +18,14 @@ import HelpView from './Components/HelpView';
 import DefaultView from './Components/MainView';
 import ResultView from './Components/ResultView';
 
-class MischungsrechnerApp extends Component {
-  onRightButtonPress() {
+const MischungsrechnerApp = React.createClass({
+  onRightButtonPress: function() {
     this.refs.nav.push({
       title: 'Hilfe',
       component: HelpView
     });
-  }
-  _bottlePickPress() {
-    this.refs.nav.push({
-      title: 'Bottle Picker View',
-      component: BottlePickerView
-    });
-  }
-  render() {
+  },
+  render: function() {
     return (
         <NavigatorIOS
             ref='nav'
@@ -39,7 +33,7 @@ class MischungsrechnerApp extends Component {
             barTintColor='#44bcff'
             tintColor='#585858'
             titleTextColor='#585858'
-            itemWrapperStyle={{backgroundColor: '#fbfbfb'}}
+            itemWrapperStyle={{backgroundColor: '#fbfbfb', padding: 20,}}
             initialRoute={{
               title: 'Mischungsrechner',
               component: DefaultView,
@@ -49,7 +43,7 @@ class MischungsrechnerApp extends Component {
         />
     );
   }
-}
+});
 
 const styles = StyleSheet.create({
   container: {

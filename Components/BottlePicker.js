@@ -5,9 +5,12 @@ import {
   Text,
   View,
   TextInput,
-  SegmentedControlIOS
 } from 'react-native';
 import Styles from '../Styles/BottlePicker';
+
+import HorizontalPicker from './HorizontalPicker';
+
+
 
 export default class BottlePicker extends Component {
   constructor() {
@@ -18,6 +21,10 @@ export default class BottlePicker extends Component {
       bumpedUp: 0
     };
     this._onValueChange = this._onValueChange.bind(this);
+    this._onFocus = this._onFocus.bind(this);
+  }
+  _onFocus() {
+    this.props.onFocus();
   }
   componentWillReceiveProps(next) {
     this.setState({
@@ -37,6 +44,7 @@ export default class BottlePicker extends Component {
         <View style={[Styles.container]}>
           <Text style={Styles.text}>Flaschen- bzw. Eimergröße in ml</Text>
           <TextInput
+              onFocus={this._onFocus}
               onChangeText={this._onValueChange}
               value={this.state.bottleValue}
               style={Styles.input}
@@ -47,16 +55,11 @@ export default class BottlePicker extends Component {
               placeholder='Sprühflasche, Eimer etc.'
               autoCorrect={false}
               ref='bottlePicker'
+              underlineColorAndroid='transparent'
 
           />
           <Text style={Styles.text}>Häufig genutzte Größen</Text>
-          <SegmentedControlIOS
-              values={this.state.values}
-              onValueChange={this._onValueChange}
-              tintColor='#44bcff'
-              momentary={true}
-          />
-          <View style={{height: this.state.keyboardSpace}} />
+          <HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChange(val)} />
         </View>
     );
   }

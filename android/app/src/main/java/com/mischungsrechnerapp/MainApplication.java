@@ -1,4 +1,4 @@
-package com.mischungsrechnerapp;
+package com.glossboss.mischungsrechner;
 
 import android.app.Application;
 import android.util.Log;

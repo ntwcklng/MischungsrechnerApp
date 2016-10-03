@@ -19,7 +19,7 @@ export default class ResultView extends Component {
     }
     return (
       <View style={Styles.container}>
-      <Text style={{marginBottom: 10, fontSize: 18}}>Dein Mischungsverhältnis ist {this.props.result} auf einer Flaschen bzw. Eimergröße von {parseInt(this.props.bottle)}ml.</Text>
+      <Text style={{marginBottom: 10, fontSize: 18, marginTop: 20}}>Dein Mischungsverhältnis ist {this.props.result} auf einer Flaschen bzw. Eimergröße von {parseInt(this.props.bottle)}ml.</Text>
         <View style={{flex: flex1, backgroundColor: '#44bcff', justifyContent:'center', marginBottom: 2, padding:5}}>
           <Text style={Styles.partText}>{part1InML} ({this.props.part1})</Text>
         </View>

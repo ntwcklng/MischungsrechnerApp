@@ -6,15 +6,12 @@ import {
 export default Style = StyleSheet.create({
   container: {
     flex:1,
-    padding: 20,
-    paddingTop:94,
-    backgroundColor:'#fbfbfb',
-    justifyContent:'center'
+    marginTop: 40,
   },
   partText: {
     color: '#FFFFFF',
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontFamily: 'System',
     fontSize: 26
   },
 

@@ -22,18 +22,21 @@ export default Style = StyleSheet.create({
     color: '#FFFFFF',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize: metaFontSize
+    fontFamily: 'System',
+    fontSize: 16,
   },
   resultText: {
     color: '#FFFFFF',
     textAlign: 'center',
     fontWeight: 'bold',
+    fontFamily: 'System',
     fontSize: 26
   },
   resetText: {
     color: '#44bcff',
     textAlign: 'center',
-    fontSize: metaFontSize
+    fontSize: 16,
+    fontFamily: 'System',
   },
   resetButton: {
     borderWidth: 1,

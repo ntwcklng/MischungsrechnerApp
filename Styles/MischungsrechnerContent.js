@@ -5,8 +5,6 @@ import {
 
 export default Style = StyleSheet.create({
   container: {
-    backgroundColor: '#fbfbfb',
-    padding: 20,
   },
   text: {
     color: '#585858',
@@ -15,8 +13,8 @@ export default Style = StyleSheet.create({
     height:2,
     backgroundColor:'rgba(0,0,0,.1)',
     borderRadius: 10,
-    marginTop: 20,
-    marginBottom: 5
+    marginTop: 10,
+    marginBottom: 3
   }
 });
 
