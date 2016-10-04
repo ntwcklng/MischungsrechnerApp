@@ -24,8 +24,8 @@ export default class MischungsrechnerContent extends Component {
     super();
     this.state = {
       bottleValue: '',
-      part1Value: '',
-      part2Value: '',
+      part1Value: '1',
+      part2Value: '4',
       behavior: 'position'
     };
     this._ResultViewPress = this._ResultViewPress.bind(this);
@@ -33,18 +33,6 @@ export default class MischungsrechnerContent extends Component {
     this.part2ValueChange = this.part2ValueChange.bind(this);
     this.bottlePickerValueChange = this.bottlePickerValueChange.bind(this);
     this._resetResult = this._resetResult.bind(this);
-    this._partPickerFocus = this._partPickerFocus.bind(this);
-    this._bottlePickerFocus = this._bottlePickerFocus.bind(this);
-  }
-  _partPickerFocus() {
-    // this.setState({
-    //   behavior: 'padding'
-    // });
-  }
-  _bottlePickerFocus() {
-    // this.setState({
-    //   behavior: 'position'
-    // });
   }
   _ResultViewPress() {
     this.props.navigator.push({

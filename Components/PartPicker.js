@@ -9,8 +9,9 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
+  Picker,
 } from 'react-native';
-
+const Item = Picker.Item;
 import HorizontalPicker from './HorizontalPicker';
 
 const dilutions = [
@@ -28,8 +29,8 @@ export default class PartPicker extends Component {
     super();
     this.state = {
       values: ['1:2', '1:4', '1:10', '1:13', '1:20','1:100','1:500'],
-      part1Value: '',
-      part2Value: '',
+      part1Value: '1',
+      part2Value: '4',
     };
     this._onValueChange1 = this._onValueChange1.bind(this);
     this._onValueChange2 = this._onValueChange2.bind(this);
@@ -86,6 +87,26 @@ export default class PartPicker extends Component {
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
           <View style={{flex:.4}}>
             <Text style={Styles.text}>Verhältnis 1</Text>
+            <TouchableOpacity onPress={() => this.setState({modalVisible1: true})}><Text style={{fontSize: 20}}>Psrt 1: {this.state.part1Value}ml</Text></TouchableOpacity>
+            <ModalPicker
+              title='Wähle Part1'
+              selectedValue={this.state.part1Value}
+              visible={this.state.modalVisible1}
+              onChangeValue={(val) => this.setState({part1Value: val})}
+              values={part1Values}
+            />
+            {/*<Picker selectedValue={this.state.part1Value} onValueChange={(val) =>  this._onValueChange1(val)}>
+              <Item label='1' value='1' />
+              <Item label='2' value='2' />
+              <Item label='3' value='3' />
+              <Item label='4' value='4' />
+              <Item label='5' value='5' />
+              <Item label='6' value='6' />
+              <Item label='7' value='7' />
+              <Item label='8' value='8' />
+              <Item label='9' value='9' />
+              <Item label='10' value='10' />
+            </Picker>
             <TextInput
                 onChangeText={this._onValueChange1}
                 onBlur={()=>dismissKeyboard()}
@@ -99,12 +120,24 @@ export default class PartPicker extends Component {
                 autoCorrect={false}
                 onFocus={this.onFocusPart}
                 underlineColorAndroid='transparent'
-            />
+            />*/}
           </View>
           <View style={{flex:.2}} />
           <View style={{flex:.4}}>
             <Text style={Styles.text}>Verhältnis 2</Text>
-            <TextInput
+            <Picker selectedValue={this.state.part2Value} onValueChange={(val) =>  this._onValueChange2(val)}>
+              <Item label='1' value='1' />
+              <Item label='2' value='2' />
+              <Item label='3' value='3' />
+              <Item label='4' value='4' />
+              <Item label='5' value='5' />
+              <Item label='6' value='6' />
+              <Item label='7' value='7' />
+              <Item label='8' value='8' />
+              <Item label='9' value='9' />
+              <Item label='10' value='10' />
+            </Picker>
+{/*            <TextInput
             onFocus={this.onFocusPart}
                 onChangeText={this._onValueChange2}
                 value={this.state.part2Value}
@@ -118,11 +151,12 @@ export default class PartPicker extends Component {
                 placeholder='Wasser'
                 autoCorrect={false}
                 ref='partPicker2'
-            />
+            />*/}
           </View>
           </View>
-        <Text style={Styles.text}>Beliebte Mischungsverhältnisse</Text>
-        <HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChangeSegment(val)} />
+        {/*<Text style={Styles.text}>Beliebte Mischungsverhältnisse</Text>*/}
+
+        {/*<HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChangeSegment(val)} />*/}
         {/*<SegmentedControlIOS
             values={this.state.values}
             onValueChange={this._onValueChangeSegment}

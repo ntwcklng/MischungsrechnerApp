@@ -5,20 +5,34 @@ import {
   Text,
   View,
   TextInput,
+  Picker,
+  Modal,
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import Styles from '../Styles/BottlePicker';
 
+const Item = Picker.Item;
+
 import HorizontalPicker from './HorizontalPicker';
+import ModalPicker from './ModalPicker';
 
 
-
+const bottleValues = [
+  { label: '100ml', value: '100'},
+  { label: '250ml', value: '250'},
+  { label: '473ml', value: '473'},
+  { label: '500ml', value: '500'},
+  { label: '1000ml', value: '1000'},
+  { label: '15 Liter', value: '15000'},
+  { label: '20 Liter', value: '20000'},
+];
 export default class BottlePicker extends Component {
   constructor() {
     super();
     this.state = {
-      values: ['250ml', '473ml', '500ml', '1l', '15l', '20l'],
-      bottleValue: '',
-      bumpedUp: 0
+      bottleValue: '250',
+      modalVisible: false
     };
     this._onValueChange = this._onValueChange.bind(this);
     this._onFocus = this._onFocus.bind(this);
@@ -42,7 +56,7 @@ export default class BottlePicker extends Component {
   render() {
     return (
         <View style={[Styles.container]}>
-          <Text style={Styles.text}>Flaschen- bzw. Eimergröße in ml</Text>
+          {/*<Text style={Styles.text}>Flaschen- bzw. Eimergröße in ml</Text>
           <TextInput
               onFocus={this._onFocus}
               onChangeText={this._onValueChange}
@@ -58,8 +72,16 @@ export default class BottlePicker extends Component {
               underlineColorAndroid='transparent'
 
           />
-          <Text style={Styles.text}>Häufig genutzte Größen</Text>
-          <HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChange(val)} />
+          <Text style={Styles.text}>Häufig genutzte Größen</Text>*/}
+          <TouchableOpacity onPress={() => this.setState({modalVisible: true})}><Text style={{fontSize: 20}}>Flaschengröße ausgewählt: {this.state.bottleValue}ml</Text></TouchableOpacity>
+          <ModalPicker
+            title='Wähle deine Flaschengröße'
+            selectedValue={this.state.bottleValue}
+            visible={this.state.modalVisible}
+            onChangeValue={(val) => this.setState({bottleValue: val})}
+            values={bottleValues}
+          />
+          {/*<HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChange(val)} />*/}
         </View>
     );
   }
