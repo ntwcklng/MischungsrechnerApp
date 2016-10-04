@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 const Item = Picker.Item;
 import HorizontalPicker from './HorizontalPicker';
+import ModalPicker from './ModalPicker';
 
 const dilutions = [
   '1:2',
@@ -23,6 +24,24 @@ const dilutions = [
   '1:100',
   '1:500',
 ];
+const part1Values = [
+  {value:'1'},
+  {value:'2'},
+  {value:'3'},
+  {value:'4'},
+  {value:'5'},
+  {value:'6'},
+  {value:'7'},
+  {value:'8'},
+  {value:'9'},
+  {value:'10'},
+];
+
+let part2Values = [];
+
+for(let i = 0; i <= 100; i++) {
+  part2Values.push({value: `${i}`});
+}
 
 export default class PartPicker extends Component {
   constructor() {
@@ -31,6 +50,8 @@ export default class PartPicker extends Component {
       values: ['1:2', '1:4', '1:10', '1:13', '1:20','1:100','1:500'],
       part1Value: '1',
       part2Value: '4',
+      modalVisible1: false,
+      modalVisible2: false,
     };
     this._onValueChange1 = this._onValueChange1.bind(this);
     this._onValueChange2 = this._onValueChange2.bind(this);
@@ -87,26 +108,17 @@ export default class PartPicker extends Component {
         <View style={{flexDirection:'row', justifyContent:'space-between'}}>
           <View style={{flex:.4}}>
             <Text style={Styles.text}>Verhältnis 1</Text>
-            <TouchableOpacity onPress={() => this.setState({modalVisible1: true})}><Text style={{fontSize: 20}}>Psrt 1: {this.state.part1Value}ml</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.setState({modalVisible1: true})}>
+              <Text style={{fontSize: 20}}>{this.state.part1Value}</Text>
+            </TouchableOpacity>
             <ModalPicker
-              title='Wähle Part1'
+              title='Wähle Part 1'
               selectedValue={this.state.part1Value}
               visible={this.state.modalVisible1}
-              onChangeValue={(val) => this.setState({part1Value: val})}
+              onChangeValue={(val) => this._onValueChange1(val)}
               values={part1Values}
             />
-            {/*<Picker selectedValue={this.state.part1Value} onValueChange={(val) =>  this._onValueChange1(val)}>
-              <Item label='1' value='1' />
-              <Item label='2' value='2' />
-              <Item label='3' value='3' />
-              <Item label='4' value='4' />
-              <Item label='5' value='5' />
-              <Item label='6' value='6' />
-              <Item label='7' value='7' />
-              <Item label='8' value='8' />
-              <Item label='9' value='9' />
-              <Item label='10' value='10' />
-            </Picker>
+            {/*
             <TextInput
                 onChangeText={this._onValueChange1}
                 onBlur={()=>dismissKeyboard()}
@@ -125,18 +137,16 @@ export default class PartPicker extends Component {
           <View style={{flex:.2}} />
           <View style={{flex:.4}}>
             <Text style={Styles.text}>Verhältnis 2</Text>
-            <Picker selectedValue={this.state.part2Value} onValueChange={(val) =>  this._onValueChange2(val)}>
-              <Item label='1' value='1' />
-              <Item label='2' value='2' />
-              <Item label='3' value='3' />
-              <Item label='4' value='4' />
-              <Item label='5' value='5' />
-              <Item label='6' value='6' />
-              <Item label='7' value='7' />
-              <Item label='8' value='8' />
-              <Item label='9' value='9' />
-              <Item label='10' value='10' />
-            </Picker>
+            <TouchableOpacity onPress={() => this.setState({modalVisible2: true})}>
+              <Text style={{fontSize: 20}}>{this.state.part2Value}</Text>
+            </TouchableOpacity>
+            <ModalPicker
+              title='Wähle Part 2'
+              selectedValue={this.state.part2Value}
+              visible={this.state.modalVisible2}
+              onChangeValue={(val) => this._onValueChange2(val)}
+              values={part2Values}
+            />
 {/*            <TextInput
             onFocus={this.onFocusPart}
                 onChangeText={this._onValueChange2}

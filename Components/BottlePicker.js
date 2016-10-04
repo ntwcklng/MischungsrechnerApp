@@ -35,15 +35,6 @@ export default class BottlePicker extends Component {
       modalVisible: false
     };
     this._onValueChange = this._onValueChange.bind(this);
-    this._onFocus = this._onFocus.bind(this);
-  }
-  _onFocus() {
-    this.props.onFocus();
-  }
-  componentWillReceiveProps(next) {
-    this.setState({
-      bottleValue: next.bottleValue,
-    });
   }
   _onValueChange(value) {
     if(!value.match(/\d/g)) { value = null; }
@@ -78,7 +69,7 @@ export default class BottlePicker extends Component {
             title='Wähle deine Flaschengröße'
             selectedValue={this.state.bottleValue}
             visible={this.state.modalVisible}
-            onChangeValue={(val) => this.setState({bottleValue: val})}
+            onChangeValue={(val) => this._onValueChange(val)}
             values={bottleValues}
           />
           {/*<HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChange(val)} />*/}

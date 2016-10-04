@@ -9,18 +9,12 @@ import {
   ScrollView
 } from 'react-native';
 import Styles from '../Styles/BottlePicker';
-
 const Item = Picker.Item;
-
-import HorizontalPicker from './HorizontalPicker';
-
-
-
-export default class BottlePicker extends Component {
-  constructor(props) {
-    super(props);
+export default class ModalPicker extends Component {
+  constructor() {
+    super()
     this.state = {
-      modalVisible: this.props.visible
+      modalVisible:false
     };
   }
   componentWillReceiveProps(next) {
@@ -38,7 +32,7 @@ export default class BottlePicker extends Component {
             {values.map((item) => {
               item.label = item.label || item.value;
               return (
-                <Item label={item.label} value={item.value} />
+                <Item key={title+item.label} label={item.label} value={item.value} />
               );
             })}
           </Picker>
