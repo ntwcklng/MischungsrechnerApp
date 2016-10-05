@@ -1,46 +1,32 @@
-
-var dismissKeyboard = require('dismissKeyboard');
-import Styles from '../Styles/PartPicker';
-import GlobalStyle from '../Styles/GlobalStyle';
 import React, { Component } from 'react';
 import {
   Text,
   View,
   TextInput,
-  ScrollView,
   TouchableOpacity,
-  Picker,
 } from 'react-native';
-const Item = Picker.Item;
-import HorizontalPicker from './HorizontalPicker';
+import OverViewItem from './OverviewItem';
 import ModalPicker from './ModalPicker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const dilutions = [
-  '1:2',
-  '1:4',
-  '1:10',
-  '1:13',
-  '1:20',
-  '1:100',
-  '1:500',
-];
 const part1Values = [
-  {value:'1'},
-  {value:'2'},
-  {value:'3'},
-  {value:'4'},
-  {value:'5'},
-  {value:'6'},
-  {value:'7'},
-  {value:'8'},
-  {value:'9'},
-  {value:'10'},
+  {value:'0', label:'eigene...'},
+  {value:'1', label:'1'},
+  {value:'2', label:'2'},
+  {value:'3', label:'3'},
+  {value:'4', label:'4'},
+  {value:'5', label:'5'},
+  {value:'6', label:'6'},
+  {value:'7', label:'7'},
+  {value:'8', label:'8'},
+  {value:'9', label:'9'},
+  {value:'10', label:'10'},
 ];
 
-let part2Values = [];
+let part2Values = [{value:'0', label:'eigene...'}];
 
-for(let i = 0; i <= 100; i++) {
-  part2Values.push({value: `${i}`});
+for(let i = 1; i <= 50; i++) {
+  part2Values.push({value: `${i}`, label: `${i}`});
 }
 
 export default class PartPicker extends Component {
@@ -92,7 +78,7 @@ export default class PartPicker extends Component {
     const tmp = dilutions.map((dil) => {
         return (
           <TouchableOpacity
-            style={Styles.horizontalBtns} onPress={this._onValueChangeSegment(dil)}>
+            style={styles.horizontalBtns} onPress={this._onValueChangeSegment(dil)}>
             <Text>{dil}</Text>
           </TouchableOpacity>
         )
@@ -104,76 +90,65 @@ export default class PartPicker extends Component {
   }
   render() {
     return (
-      <View style={Styles.container}>
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-          <View style={{flex:.4}}>
-            <Text style={Styles.text}>Verhältnis 1</Text>
-            <TouchableOpacity onPress={() => this.setState({modalVisible1: true})}>
-              <Text style={{fontSize: 20}}>{this.state.part1Value}</Text>
-            </TouchableOpacity>
-            <ModalPicker
-              title='Wähle Part 1'
-              selectedValue={this.state.part1Value}
-              visible={this.state.modalVisible1}
-              onChangeValue={(val) => this._onValueChange1(val)}
-              values={part1Values}
-            />
-            {/*
-            <TextInput
-                onChangeText={this._onValueChange1}
-                onBlur={()=>dismissKeyboard()}
-                value={this.state.part1Value}
-                style={Styles.input}
-                keyboardType='numbers-and-punctuation'
-                returnKeyType='done'
-                clearButtonMode='always'
-                selectTextOnFocus={true}
-                placeholder='Produkt'
-                autoCorrect={false}
-                onFocus={this.onFocusPart}
-                underlineColorAndroid='transparent'
-            />*/}
-          </View>
-          <View style={{flex:.2}} />
-          <View style={{flex:.4}}>
-            <Text style={Styles.text}>Verhältnis 2</Text>
-            <TouchableOpacity onPress={() => this.setState({modalVisible2: true})}>
-              <Text style={{fontSize: 20}}>{this.state.part2Value}</Text>
-            </TouchableOpacity>
-            <ModalPicker
-              title='Wähle Part 2'
-              selectedValue={this.state.part2Value}
-              visible={this.state.modalVisible2}
-              onChangeValue={(val) => this._onValueChange2(val)}
-              values={part2Values}
-            />
-{/*            <TextInput
-            onFocus={this.onFocusPart}
-                onChangeText={this._onValueChange2}
-                value={this.state.part2Value}
-                style={Styles.input}
-                onBlur={()=>dismissKeyboard()}
-                underlineColorAndroid='transparent'
-                keyboardType='numbers-and-punctuation'
-                returnKeyType='done'
-                clearButtonMode='always'
-                selectTextOnFocus={true}
-                placeholder='Wasser'
-                autoCorrect={false}
-                ref='partPicker2'
-            />*/}
-          </View>
-          </View>
-        {/*<Text style={Styles.text}>Beliebte Mischungsverhältnisse</Text>*/}
-
-        {/*<HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChangeSegment(val)} />*/}
-        {/*<SegmentedControlIOS
-            values={this.state.values}
-            onValueChange={this._onValueChangeSegment}
-            tintColor='#44bcff'
-            momentary={true}
-        />*/}
+      <View style={styles.container}>
+        <OverViewItem
+          title='Verhältnis 1'
+          subtitle='Meistens ist hiermit das Produkt gemeint'
+          onPress={() => this.setState({modalVisible1: true})}
+          value={this.state.part1Value}
+        />
+        <OverViewItem
+          title='Verhältnis 2'
+          subtitle='Meistens ist hiermit das Wasser'
+          onPress={() => this.setState({modalVisible2: true})}
+          value={this.state.part2Value}
+        />
+        <ModalPicker
+        title='Wähle das 1. Mischungsverhältnis'
+        selectedValue={this.state.part1Value}
+        visible={this.state.modalVisible1}
+        onChangeValue={(val) => this._onValueChange1(val)}
+        values={part1Values}
+        onClose={() => this.setState({modalVisible1: false})}
+        />
+        <ModalPicker
+        title='Wähle das 2. Mischungsverhältnis'
+        selectedValue={this.state.part2Value}
+        visible={this.state.modalVisible2}
+        onChangeValue={(val) => this._onValueChange2(val)}
+        values={part2Values}
+        onClose={() => this.setState({modalVisible2: false})}
+        />
       </View>
     );
   }
 };
+const styles = StyleSheet.create({
+  horizontalBtns: {
+    margin: 2,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    backgroundColor: '#44bcff',
+  },
+  container: {
+    paddingTop: 0,
+    paddingBottom: 10
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#44bcff',
+    height: 40,
+    padding: 10,
+    marginBottom: 20,
+    backgroundColor: '#ffffff',
+    fontFamily: 'System',
+    fontSize: 14,
+  },
+  text: {
+    textAlign:'center',
+    fontFamily: 'System',
+    fontSize: 18,
+    marginBottom: 5,
+    color: '#585858'
+  }
+});

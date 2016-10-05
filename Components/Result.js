@@ -2,7 +2,6 @@
 import Styles from '../Styles/Result';
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -24,24 +23,24 @@ export default class Result extends Component {
   render() {
     return (
       <View style={{flex:1}}>
-        <View style={Styles.results}>
-          <Text style={Styles.resultText}>{this.props.result}</Text>
-        </View>
-        <View style={Styles.metaView}>
-          <TouchableOpacity
-              style={Styles.resetButton}
-              onPress={this._onClickReset}
-              underlayColor='#9DDAFC'>
-              <Text style={Styles.resetText}>Reset</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-              style={Styles.infoButton}
-              underlayColor='#9DDAFC'
-              onPress={this._onClick}>
-              <Text style={Styles.text}>Info</Text>
-          </TouchableOpacity>
+        <View style={styles.results}>
+          <Text style={styles.resultText}>{this.props.result}</Text>
         </View>
       </View>
     );
   }
 };
+const styles = StyleSheet.create({
+  results: {
+    backgroundColor: '#44bcff',
+    paddingVertical: 15,
+    marginBottom: 8,
+  },
+  resultText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'System',
+    fontSize: 26,
+  },
+});

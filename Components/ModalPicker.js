@@ -6,55 +6,96 @@ import {
   Picker,
   Modal,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
+  TextInput
 } from 'react-native';
 import Styles from '../Styles/BottlePicker';
 const Item = Picker.Item;
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 export default class ModalPicker extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
-      modalVisible:false
+      modalVisible:false,
+      toggleKeyboard: false,
+      textInputValue: '0',
     };
+    this._closeModal = this._closeModal.bind(this);
   }
   componentWillReceiveProps(next) {
     this.setState({
       modalVisible: next.visible,
     });
   }
+  _closeModal() {
+    this.setState({modalVisible: false})
+    this.props.onClose();
+  }
   render() {
-    const { title, values, onChangeValue, selectedValue } = this.props;
+    const { title, values, onChangeValue, selectedValue, close, maxLength } = this.props;
+    const { modalVisible, toggleKeyboard } = this.state;
     return (
-      <Modal animationType={'slide'} transparent={false} visible={this.state.modalVisible}>
-        <ScrollView style={styles.mainScrollView}>
+      <Modal
+        animationType={'slide'}
+        transparent={false}
+        visible={modalVisible}>
+        <KeyboardAwareScrollView>
+        <View style={styles.mainView}>
           <Text style={styles.text}>{title}</Text>
-          <Picker selectedValue={selectedValue} onValueChange={(val) =>  onChangeValue(val)}>
+          <Picker
+            selectedValue={selectedValue}
+            onValueChange={(val) => {
+              const showInput = (val === '0');
+                this.setState({
+                  toggleKeyboard: showInput,
+
+                });
+              onChangeValue(val);
+              }
+            }>
             {values.map((item) => {
-              item.label = item.label || item.value;
-              return (
-                <Item key={title+item.label} label={item.label} value={item.value} />
-              );
+              return <Item key={item.label} label={item.label || item.value} value={item.value} />
             })}
           </Picker>
           <View style={styles.viewContainer}>
+          { toggleKeyboard && <View style={{backgroundColor: '#f7f7f7', padding: 3,}}><TextInput
+            onChangeText={(val) => onChangeValue(val)}
+            keyboardType='numeric'
+            returnKeyType='done'
+            maxLength={maxLength || 4}
+            focus={toggleKeyboard}
+            clearButtonMode='always'
+            underlineColorAndroid='transparent'
+            style={styles.input}
+            value={selectedValue}
+            selectTextOnFocus={true}
+          /></View>}
           <TouchableOpacity
           style={styles.DoneButton}
-          onPress={() => this.setState({modalVisible: false})}>
-            <Text style={styles.DoneButtonText}>Fertig</Text>
+          onPress={this._closeModal}>
+            <Text style={styles.DoneButtonText}>Übernehmen</Text>
           </TouchableOpacity>
           </View>
-        </ScrollView>
+        </View>
+        </KeyboardAwareScrollView>
       </Modal>
     );
   }
 };
 
 const styles = StyleSheet.create({
+  input: {
+    backgroundColor: '#f7f7f7',
+    margin: 10,
+    borderWidth: 0,
+    height: 40,
+  },
   DoneButtonText: {
-    padding: 10,
+    padding: 13,
     textAlign: 'center',
     color: 'white',
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   DoneButton: {
     backgroundColor: '#44bcff',
@@ -72,28 +113,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
   },
-  mainScrollView: {
+  mainView: {
     margin: 30,
     paddingTop: 40,
     flex: 1,
-  },
-  TonnenDesc: {
-    marginTop: 15,
-    color: '#585858',
-    textAlign: 'center',
-  },
-  ImgBtn: {
-    height: 100,
-    width: 100,
-    alignSelf: 'center'
-  },
-  TonnenButton: {
-    backgroundColor: '#fff',
-    marginBottom: 20,
-    padding: 10,
-    flex:1,
-    alignItems: 'stretch',
-    justifyContent: 'space-around'
   },
   container: {
     flex: 1,
