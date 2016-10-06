@@ -1,5 +1,3 @@
-
-import Styles from '../Styles/Result';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -9,17 +7,6 @@ import {
 } from 'react-native';
 
 export default class Result extends Component {
-  constructor() {
-    super();
-    this._onClick = this._onClick.bind(this);
-    this._onClickReset = this._onClickReset.bind(this);
-  }
-  _onClick() {
-    this.props.handlePress();
-  }
-  _onClickReset() {
-    this.props.handlePressReset();
-  }
   render() {
     return (
       <View style={{flex:1}}>
@@ -35,6 +22,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#44bcff',
     paddingVertical: 15,
     marginBottom: 8,
+    borderRadius: 7,
   },
   resultText: {
     color: '#FFFFFF',

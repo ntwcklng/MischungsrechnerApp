@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
 import OverViewItem from './OverviewItem';
 import ModalPicker from './ModalPicker';
@@ -33,7 +34,6 @@ export default class PartPicker extends Component {
   constructor() {
     super();
     this.state = {
-      values: ['1:2', '1:4', '1:10', '1:13', '1:20','1:100','1:500'],
       part1Value: '1',
       part2Value: '4',
       modalVisible1: false,
@@ -42,7 +42,6 @@ export default class PartPicker extends Component {
     this._onValueChange1 = this._onValueChange1.bind(this);
     this._onValueChange2 = this._onValueChange2.bind(this);
     this._onValueChangeSegment = this._onValueChangeSegment.bind(this);
-    this.onFocusPart = this.onFocusPart.bind(this);
   }
   componentWillReceiveProps(next) {
     this.setState({
@@ -59,34 +58,6 @@ export default class PartPicker extends Component {
     if(!value.match(/\d/g)) { value = null; }
     this.setState({part2Value: value});
     this.props.val2Change(value);
-  }
-  _onValueChangeSegment(value) {
-
-    var splitVal = value.split(':');
-    this.setState({
-      part1Value: splitVal[0],
-      part2Value: splitVal[1]
-    });
-    this._onValueChange1(splitVal[0]);
-    this._onValueChange2(splitVal[1]);
-
-  }
-  onFocusPart() {
-    this.props.onFocus();
-  }
-  renderDilution() {
-    const tmp = dilutions.map((dil) => {
-        return (
-          <TouchableOpacity
-            style={styles.horizontalBtns} onPress={this._onValueChangeSegment(dil)}>
-            <Text>{dil}</Text>
-          </TouchableOpacity>
-        )
-    });
-    console.log(tmp);
-    return tmp;
-  }
-  componentWillMount() {
   }
   render() {
     return (

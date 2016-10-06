@@ -1,3 +1,4 @@
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -9,9 +10,9 @@ import {
   ScrollView,
   TextInput
 } from 'react-native';
-import Styles from '../Styles/BottlePicker';
 const Item = Picker.Item;
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
+
 export default class ModalPicker extends Component {
   constructor(props) {
     super(props)
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
     height: 40,
   },
   DoneButtonText: {
-    padding: 13,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
     textAlign: 'center',
     color: 'white',
     fontSize: 20,
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderWidth:1,
     borderColor: '#44bcff',
-    marginHorizontal: 30,
+    marginHorizontal: 5,
     marginVertical: 20
   },
   viewContainer: {

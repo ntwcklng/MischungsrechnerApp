@@ -25,7 +25,7 @@ export default class OverViewItem extends Component {
           </View>
           <View style={{flex:.1}}>
             <View>
-              <Icon style={styles.editButton} name='pencil-square-o' size={20} color='#889eac' />
+              <Icon style={styles.editButton} name='pencil-square-o' size={16} color='#889eac' />
             </View>
           </View>
         </TouchableOpacity>
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   },
   editButton: {
     textAlign: 'center',
+    marginLeft: 6,
   },
   container: {
     flexDirection: 'row',
