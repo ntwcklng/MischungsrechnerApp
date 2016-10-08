@@ -15,7 +15,7 @@ export default class DefaultView extends Component {
 
   render() {
     return (
-      <View style={{flex:1,}}>
+      <View style={{flex:1, }}>
         <ScrollView ref='scrollView'>
           <MischungsrechnerContent navigator={this.props.navigator} />
         </ScrollView>

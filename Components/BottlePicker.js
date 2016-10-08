@@ -1,30 +1,35 @@
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  TextInput,
+  Modal,
+  TouchableOpacity,
+  ScrollView,
+  TextInput
 } from 'react-native';
-import Styles from '../Styles/BottlePicker';
 
-import HorizontalPicker from './HorizontalPicker';
+import OverViewItem from './OverviewItem';
+import ModalPicker from './ModalPicker';
 
-
-
+const bottleValues = [
+  { label: 'eigene...', value: ''},
+  { label: '100ml', value: '100'},
+  { label: '250ml', value: '250'},
+  { label: '473ml', value: '473'},
+  { label: '500ml', value: '500'},
+  { label: '1000ml', value: '1000'},
+  { label: '15 Liter', value: '15000'},
+  { label: '20 Liter', value: '20000'},
+];
 export default class BottlePicker extends Component {
   constructor() {
     super();
     this.state = {
-      values: ['250ml', '473ml', '500ml', '1l', '15l', '20l'],
-      bottleValue: '',
-      bumpedUp: 0
+      bottleValue: '100',
+      modalVisible: false
     };
     this._onValueChange = this._onValueChange.bind(this);
-    this._onFocus = this._onFocus.bind(this);
-  }
-  _onFocus() {
-    this.props.onFocus();
   }
   componentWillReceiveProps(next) {
     this.setState({
@@ -32,35 +37,39 @@ export default class BottlePicker extends Component {
     });
   }
   _onValueChange(value) {
-    if(!value.match(/\d/g)) { value = null; }
-
     this.setState({
       bottleValue: value
     });
     this.props.bottlePickerValueChange(value);
   }
   render() {
+    const bottleUnit = (this.state.bottleValue >= 10000) ? 'Liter' : 'ml';
     return (
-        <View style={[Styles.container]}>
-          <Text style={Styles.text}>Flaschen- bzw. Eimergröße in ml</Text>
-          <TextInput
-              onFocus={this._onFocus}
-              onChangeText={this._onValueChange}
-              value={this.state.bottleValue}
-              style={Styles.input}
-              keyboardType='numbers-and-punctuation'
-              returnKeyType='done'
-              clearButtonMode='always'
-              selectTextOnFocus={true}
-              placeholder='Sprühflasche, Eimer etc.'
-              autoCorrect={false}
-              ref='bottlePicker'
-              underlineColorAndroid='transparent'
-
+        <View style={[styles.container]}>
+          <OverViewItem
+            title='Flaschengröße'
+            subtitle={`Fassungsvermögen Flasche/Eimer in ${bottleUnit}`}
+            onPress={() => this.setState({modalVisible: true})}
+            value={this.state.bottleValue}
           />
-          <Text style={Styles.text}>Häufig genutzte Größen</Text>
-          <HorizontalPicker items={this.state.values} onPress={(val) => this._onValueChange(val)} />
+          <ModalPicker
+            title='Wähle deine Flaschen- bzw. Eimergröße'
+            selectedValue={this.state.bottleValue}
+            visible={this.state.modalVisible}
+            onChangeValue={(val) => this._onValueChange(val)}
+            values={bottleValues}
+            onClose={() => {this.setState({modalVisible: false}); this.props.onClose()}}
+            maxLength={5}
+            inputPlaceholder='Flaschengröße in ml'
+          />
         </View>
     );
   }
 };
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 15,
+    paddingBottom: 10,
+    marginBottom: 20
+  }
+});

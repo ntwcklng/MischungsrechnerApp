@@ -1,47 +1,75 @@
-
-import Styles from '../Styles/Result';
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 
 export default class Result extends Component {
-  constructor() {
-    super();
-    this._onClick = this._onClick.bind(this);
-    this._onClickReset = this._onClickReset.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      animated: true,
+      scale: new Animated.Value(0),
+      rotate: new Animated.Value(0),
+    };
   }
-  _onClick() {
-    this.props.handlePress();
-  }
-  _onClickReset() {
-    this.props.handlePressReset();
+  _animatedResult() {
+    this.state.scale.setValue(0);
+    this.state.rotate.setValue(0);
+    Animated.sequence([
+      Animated.timing(this.state.scale, {delay: 130, toValue: 1.2, duration: 50}),
+      Animated.timing(this.state.rotate, {delay: 0, toValue: 1.5, duration: 50}),
+      Animated.parallel([
+        Animated.spring(
+          this.state.scale, {toValue: 1, friction: 6, tension: 110,}
+        ),
+        Animated.spring(
+          this.state.rotate, {toValue: 0, friction: 4, tension: 110,}
+        )
+      ])
+    ]).start();
+
   }
   render() {
+    const interpolatedRotateAnim = this.state.rotate.interpolate({
+      inputRange: [0, 100],
+      outputRange: ['0deg', '360deg']
+    });
     return (
       <View style={{flex:1}}>
-        <View style={Styles.results}>
-          <Text style={Styles.resultText}>{this.props.result}</Text>
-        </View>
-        <View style={Styles.metaView}>
-          <TouchableOpacity
-              style={Styles.resetButton}
-              onPress={this._onClickReset}
-              underlayColor='#9DDAFC'>
-              <Text style={Styles.resetText}>Reset</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-              style={Styles.infoButton}
-              underlayColor='#9DDAFC'
-              onPress={this._onClick}>
-              <Text style={Styles.text}>Info</Text>
-          </TouchableOpacity>
-        </View>
+        <Animated.View style={
+          [styles.results,
+          {transform: [{scale: this.state.scale}, {rotate: interpolatedRotateAnim}]
+          }]}>
+          <Text style={styles.resultText}>{this.props.result}</Text>
+        </Animated.View>
       </View>
     );
   }
+  componentWillReceiveProps(next) {
+    if (next.startAnim) {
+      this._animatedResult();
+    }
+  }
+  componentDidMount() {
+    this._animatedResult();
+  }
 };
+const styles = StyleSheet.create({
+  results: {
+    backgroundColor: '#44bcff',
+    paddingVertical: 15,
+    marginBottom: 8,
+    borderRadius: 7,
+  },
+  resultText: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontFamily: 'System',
+    fontSize: 26,
+  },
+});
