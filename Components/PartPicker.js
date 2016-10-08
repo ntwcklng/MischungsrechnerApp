@@ -11,7 +11,7 @@ import ModalPicker from './ModalPicker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const part1Values = [
-  {value:'0', label:'eigene...'},
+  {value:'', label:'eigene...'},
   {value:'1', label:'1'},
   {value:'2', label:'2'},
   {value:'3', label:'3'},
@@ -24,7 +24,7 @@ const part1Values = [
   {value:'10', label:'10'},
 ];
 
-let part2Values = [{value:'0', label:'eigene...'}];
+let part2Values = [{value:'', label:'eigene...'}];
 
 for(let i = 1; i <= 50; i++) {
   part2Values.push({value: `${i}`, label: `${i}`});
@@ -35,13 +35,12 @@ export default class PartPicker extends Component {
     super();
     this.state = {
       part1Value: '1',
-      part2Value: '4',
+      part2Value: '2',
       modalVisible1: false,
       modalVisible2: false,
     };
     this._onValueChange1 = this._onValueChange1.bind(this);
     this._onValueChange2 = this._onValueChange2.bind(this);
-    this._onValueChangeSegment = this._onValueChangeSegment.bind(this);
   }
   componentWillReceiveProps(next) {
     this.setState({
@@ -50,12 +49,12 @@ export default class PartPicker extends Component {
     });
   }
   _onValueChange1(value) {
-    if(!value.match(/\d/g)) { value = null; }
+    // if(!value.match(/\d/g)) { value = ''; }
     this.setState({part1Value: value});
     this.props.val1Change(value);
   }
   _onValueChange2(value) {
-    if(!value.match(/\d/g)) { value = null; }
+    // if(!value.match(/\d/g)) { value = ''; }
     this.setState({part2Value: value});
     this.props.val2Change(value);
   }
@@ -63,32 +62,36 @@ export default class PartPicker extends Component {
     return (
       <View style={styles.container}>
         <OverViewItem
-          title='Verhältnis 1'
-          subtitle='Meistens ist hiermit das Produkt gemeint'
+          title='1. Teil'
+          subtitle='Produkt'
           onPress={() => this.setState({modalVisible1: true})}
           value={this.state.part1Value}
         />
         <OverViewItem
-          title='Verhältnis 2'
-          subtitle='Meistens ist hiermit das Wasser'
+          title='2. Teil'
+          subtitle='Wasser'
           onPress={() => this.setState({modalVisible2: true})}
           value={this.state.part2Value}
         />
         <ModalPicker
-        title='Wähle das 1. Mischungsverhältnis'
+        title='Meistens ist hiermit das Produkt bzw. das erste Mischungsverhältnis gemeint.'
+        subTitle='1:4 = 1 Teil Produkt, 4 Teile Wasser.'
         selectedValue={this.state.part1Value}
         visible={this.state.modalVisible1}
         onChangeValue={(val) => this._onValueChange1(val)}
         values={part1Values}
-        onClose={() => this.setState({modalVisible1: false})}
+        onClose={() => {this.setState({modalVisible1: false}); this.props.onClose()}}
+        inputPlaceholder='1. Teil'
         />
         <ModalPicker
-        title='Wähle das 2. Mischungsverhältnis'
+        title='Das 2. Verhältnis beschreibt in der Regel den Wasseranteil der Mischung.'
+        subTitle='1:4 = 1 Teil Produkt, 4 Teile Wasser.'
         selectedValue={this.state.part2Value}
         visible={this.state.modalVisible2}
         onChangeValue={(val) => this._onValueChange2(val)}
         values={part2Values}
-        onClose={() => this.setState({modalVisible2: false})}
+        onClose={() => {this.setState({modalVisible2: false}); this.props.onClose()}}
+        inputPlaceholder='2. Teil'
         />
       </View>
     );

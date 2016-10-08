@@ -13,7 +13,7 @@ import OverViewItem from './OverviewItem';
 import ModalPicker from './ModalPicker';
 
 const bottleValues = [
-  { label: 'eigene...', value: '0'},
+  { label: 'eigene...', value: ''},
   { label: '100ml', value: '100'},
   { label: '250ml', value: '250'},
   { label: '473ml', value: '473'},
@@ -26,7 +26,7 @@ export default class BottlePicker extends Component {
   constructor() {
     super();
     this.state = {
-      bottleValue: '250',
+      bottleValue: '100',
       modalVisible: false
     };
     this._onValueChange = this._onValueChange.bind(this);
@@ -37,19 +37,18 @@ export default class BottlePicker extends Component {
     });
   }
   _onValueChange(value) {
-    if(!value.match(/\d/g)) { value = '0'; }
-
     this.setState({
       bottleValue: value
     });
     this.props.bottlePickerValueChange(value);
   }
   render() {
+    const bottleUnit = (this.state.bottleValue >= 10000) ? 'Liter' : 'ml';
     return (
         <View style={[styles.container]}>
           <OverViewItem
             title='Flaschengröße'
-            subtitle='Fassungsvermögen der Sprühflasche/Eimer'
+            subtitle={`Fassungsvermögen Flasche/Eimer in ${bottleUnit}`}
             onPress={() => this.setState({modalVisible: true})}
             value={this.state.bottleValue}
           />
@@ -59,8 +58,9 @@ export default class BottlePicker extends Component {
             visible={this.state.modalVisible}
             onChangeValue={(val) => this._onValueChange(val)}
             values={bottleValues}
-            onClose={() => this.setState({modalVisible: false})}
+            onClose={() => {this.setState({modalVisible: false}); this.props.onClose()}}
             maxLength={5}
+            inputPlaceholder='Flaschengröße in ml'
           />
         </View>
     );

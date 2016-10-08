@@ -22,7 +22,7 @@ export default class HelpView extends Component {
           Ergänze im letzten Eingabefeld einfach die Flaschen- bzw. Eimergröße in ml. Als kleine Hilfe haben wir dir die gängigsten Größen bereits hinterlegt.
         </Text>
         <Text style={{paddingTop: 20, fontSize: 18,fontFamily: 'System',}}>
-          Wenn du alles eingegeben hast, erscheint das gewünschte Mischungsverhältnis sofort unten im blauen Feld. Klicke auf Info um mehr über das Mischungsverhältnis zu erfahren oder lösche alle Eingaben mit dem Reset-Knopf.
+          Wenn du alles eingegeben hast, erscheint das gewünschte Mischungsverhältnis sofort unten im blauen Feld.
         </Text>
         </ScrollView>
       </View>

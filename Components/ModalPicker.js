@@ -8,9 +8,12 @@ import {
   Modal,
   TouchableOpacity,
   ScrollView,
-  TextInput
+  TextInput,
+  Alert,
 } from 'react-native';
 const Item = Picker.Item;
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class ModalPicker extends Component {
@@ -19,7 +22,6 @@ export default class ModalPicker extends Component {
     this.state = {
       modalVisible:false,
       toggleKeyboard: false,
-      textInputValue: '0',
     };
     this._closeModal = this._closeModal.bind(this);
   }
@@ -29,29 +31,34 @@ export default class ModalPicker extends Component {
     });
   }
   _closeModal() {
+    if (this.props.selectedValue === '' || this.props.selectedValue === '0') {
+      return Alert.alert('Fehler', 'Bitte trage eine Zahl in das Eingabefeld ein.', [
+        {text: 'OK', onPress: () => this.refs.inputValue.focus()}
+      ]);
+    }
     this.setState({modalVisible: false})
     this.props.onClose();
   }
   render() {
-    const { title, values, onChangeValue, selectedValue, close, maxLength } = this.props;
+    const { title, subTitle, values, onChangeValue, selectedValue, close, maxLength, inputPlaceholder } = this.props;
     const { modalVisible, toggleKeyboard } = this.state;
     return (
       <Modal
+        onRequestClose={this._closeModal}
         animationType={'slide'}
         transparent={false}
         visible={modalVisible}>
         <KeyboardAwareScrollView>
         <View style={styles.mainView}>
           <Text style={styles.text}>{title}</Text>
+          <Text style={styles.textSub}>{subTitle}</Text>
           <Picker
             selectedValue={selectedValue}
             onValueChange={(val) => {
-              const showInput = (val === '0');
-                this.setState({
-                  toggleKeyboard: showInput,
-
-                });
+              const showInput = (val === '');
+              this.setState({toggleKeyboard: showInput});
               onChangeValue(val);
+              if (val === '') this.refs.inputValue.focus();
               }
             }>
             {values.map((item) => {
@@ -59,17 +66,19 @@ export default class ModalPicker extends Component {
             })}
           </Picker>
           <View style={styles.viewContainer}>
-          { toggleKeyboard && <View style={{backgroundColor: '#f7f7f7', padding: 3,}}><TextInput
+          <Icon name='chevron-down' color='#44bcff' size={25} style={{alignSelf: 'center', margin: 5,}} />
+          { true && <View style={{backgroundColor: '#f7f7f7', padding: 2,}}><TextInput
             onChangeText={(val) => onChangeValue(val)}
             keyboardType='numeric'
             returnKeyType='done'
             maxLength={maxLength || 4}
-            focus={toggleKeyboard}
             clearButtonMode='always'
             underlineColorAndroid='transparent'
             style={styles.input}
             value={selectedValue}
             selectTextOnFocus={true}
+            ref='inputValue'
+            placeholder={inputPlaceholder}
           /></View>}
           <TouchableOpacity
           style={styles.DoneButton}
@@ -87,9 +96,10 @@ export default class ModalPicker extends Component {
 const styles = StyleSheet.create({
   input: {
     backgroundColor: '#f7f7f7',
-    margin: 10,
+    margin: 4,
     borderWidth: 0,
     height: 40,
+    color: '#585858',
   },
   DoneButtonText: {
     paddingVertical: 10,
@@ -114,6 +124,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    color: '#585858',
+  },
+  textSub: {
+    fontSize: 16,
+    color: '#757575',
   },
   mainView: {
     margin: 30,

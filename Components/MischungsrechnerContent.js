@@ -17,60 +17,30 @@ export default class MischungsrechnerContent extends Component {
   constructor() {
     super();
     this.state = {
-      bottleValue: '',
+      bottleValue: '100',
       part1Value: '1',
-      part2Value: '4',
+      part2Value: '2',
     };
     this.part1ValueChange = this.part1ValueChange.bind(this);
     this.part2ValueChange = this.part2ValueChange.bind(this);
     this.bottlePickerValueChange = this.bottlePickerValueChange.bind(this);
-    this._resetResult = this._resetResult.bind(this);
   }
   part1ValueChange(value) {
-    if(!value) {
-      this.setState({
-        part1Value: ''
-      });
-      return;
-    } else {
-      this.setState({
-        part1Value: value
-      });
-    }
+    this.setState({
+      part1Value: value,
+    });
   }
   part2ValueChange(value) {
-    if(!value) {
-      this.setState({
-        part2Value: ''
-      });
-      return;
-    } else {
-      this.setState({
-        part2Value: value
-      });
-    }
+    this.setState({
+      part2Value: value,
+    });
   }
   bottlePickerValueChange (value) {
-    if(!value) {
-      this.setState({
-        bottleValue: '0'
-      });
-      return;
-    }
     this.setState({
-      bottleValue: value
+      bottleValue: value,
     });
   }
-  _resetResult() {
-    this.setState({
-      bottleValue: '250',
-      part1Value: '1',
-      part2Value: '4'
-    });
-  }
-  componentWillMount() {
-    this._resetResult();
-  }
+
   render() {
     if(this.state.part1Value !== 0 && this.state.part2Value !== 0 && this.state.bottleValue !== 0) {
       calc = Calculate(parseInt(this.state.part1Value), parseInt(this.state.part2Value), this.state.bottleValue);
@@ -81,19 +51,19 @@ export default class MischungsrechnerContent extends Component {
     return (
       <View style={styles.container}>
         <PartPicker
-            onFocus={this._partPickerFocus}
             val1Change={(value) => this.part1ValueChange(value)}
             val2Change={(value) => this.part2ValueChange(value)}
             part1Value={this.state.part1Value}
             part2Value={this.state.part2Value}
+            onClose={() => this.setState({animRes: true})}
         />
         <View style={styles.hr} />
         <BottlePicker
-            onFocus={this._bottlePickerFocus}
+            onClose={() => this.setState({animRes: true})}
             bottlePickerValueChange={this.bottlePickerValueChange}
             bottleValue={this.state.bottleValue}
             />
-        {resultOpacity && <Result result={calc[0]} handlePress={this._ResultViewPress} handlePressReset={this._resetResult}/>}
+        {resultOpacity && <Result startAnim={this.state.animRes} result={calc[0]} handlePress={this._ResultViewPress} handlePressReset={this._resetResult}/>}
       </View>
     );
   }
