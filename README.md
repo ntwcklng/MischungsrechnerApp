@@ -1,1 +1,1 @@
-# MischungsrechnerApp 27.09.2016
+# MischungsrechnerApp 2.0
