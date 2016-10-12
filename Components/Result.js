@@ -17,7 +17,7 @@ export default class Result extends Component {
     };
   }
   _animatedResult() {
-    this.state.scale.setValue(0);
+    this.state.scale.setValue(1);
     this.state.rotate.setValue(0);
     Animated.sequence([
       Animated.timing(this.state.scale, {delay: 130, toValue: 1.2, duration: 50}),
@@ -44,7 +44,7 @@ export default class Result extends Component {
           [styles.results,
           {transform: [{scale: this.state.scale}, {rotate: interpolatedRotateAnim}]
           }]}>
-          <Text style={styles.resultText}>{this.props.result}</Text>
+          <TouchableOpacity onPress={() => this.props.onPress()}><Text style={styles.resultText}>{this.props.result}</Text></TouchableOpacity>
         </Animated.View>
       </View>
     );

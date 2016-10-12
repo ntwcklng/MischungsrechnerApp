@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
     color: '#757575',
   },
   mainView: {
-    margin: 30,
-    paddingTop: 40,
+    margin: 25,
+    paddingTop: 10,
     flex: 1,
   },
   container: {

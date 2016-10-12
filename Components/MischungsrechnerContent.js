@@ -24,6 +24,7 @@ export default class MischungsrechnerContent extends Component {
     this.part1ValueChange = this.part1ValueChange.bind(this);
     this.part2ValueChange = this.part2ValueChange.bind(this);
     this.bottlePickerValueChange = this.bottlePickerValueChange.bind(this);
+    this._animateResult = this._animateResult.bind(this);
   }
   part1ValueChange(value) {
     this.setState({
@@ -40,14 +41,19 @@ export default class MischungsrechnerContent extends Component {
       bottleValue: value,
     });
   }
+  _animateResult() {
+    this.setState({animRes: true});
+    setTimeout(() => {
+      this.setState({animRes: false})
+    }, 50);
+  }
 
   render() {
     if(this.state.part1Value !== 0 && this.state.part2Value !== 0 && this.state.bottleValue !== 0) {
       calc = Calculate(parseInt(this.state.part1Value), parseInt(this.state.part2Value), this.state.bottleValue);
     } else {
-      calc[0] = 0;
+      calc[0] = 'Ungültige Angaben.';
     }
-    var resultOpacity = (calc[0] != 0) ? true : false;
     return (
       <View style={styles.container}>
         <PartPicker
@@ -55,15 +61,15 @@ export default class MischungsrechnerContent extends Component {
             val2Change={(value) => this.part2ValueChange(value)}
             part1Value={this.state.part1Value}
             part2Value={this.state.part2Value}
-            onClose={() => this.setState({animRes: true})}
+            onClose={this._animateResult}
         />
         <View style={styles.hr} />
         <BottlePicker
-            onClose={() => this.setState({animRes: true})}
+            onClose={this._animateResult}
             bottlePickerValueChange={this.bottlePickerValueChange}
             bottleValue={this.state.bottleValue}
             />
-        {resultOpacity && <Result startAnim={this.state.animRes} result={calc[0]} handlePress={this._ResultViewPress} handlePressReset={this._resetResult}/>}
+        <Result startAnim={this.state.animRes} result={calc[0]} onPress={() => this._animateResult()}/>
       </View>
     );
   }
