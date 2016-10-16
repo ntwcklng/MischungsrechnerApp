@@ -3113,6 +3113,10 @@ react-native-keyboard-spacer@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/react-native-keyboard-spacer/-/react-native-keyboard-spacer-0.3.0.tgz#09016c11f6b5cfbc3b96c63e6d049e77a3e0908b"
 
+react-native-storage:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-storage/-/react-native-storage-0.1.4.tgz#d1b9bcd7f8589c21f4b1ab470b2596f408d8cd36"
+
 react-native-vector-icons@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-2.1.0.tgz#37ff40e2fc753a56624846e7471282b818b92edc"
