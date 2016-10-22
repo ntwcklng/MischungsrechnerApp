@@ -1,4 +1,3 @@
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -13,6 +12,7 @@ import {
 } from 'react-native';
 const Item = Picker.Item;
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
