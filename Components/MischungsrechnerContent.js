@@ -6,12 +6,12 @@ let calc = [0,0];
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
-  TextInput,
 } from 'react-native';
+
+import SlideUpAndShowItem from './SlideUpAndShowItem';
 
 export default class MischungsrechnerContent extends Component {
   constructor() {
@@ -45,9 +45,8 @@ export default class MischungsrechnerContent extends Component {
     this.setState({animRes: true});
     setTimeout(() => {
       this.setState({animRes: false})
-    }, 50);
+    }, 100);
   }
-
   render() {
     if(this.state.part1Value !== 0 && this.state.part2Value !== 0 && this.state.bottleValue !== 0) {
       calc = Calculate(parseInt(this.state.part1Value), parseInt(this.state.part2Value), this.state.bottleValue);
@@ -56,6 +55,10 @@ export default class MischungsrechnerContent extends Component {
     }
     return (
       <View style={styles.container}>
+      {/*
+         * In order to move the 2 Picker in sequence, the SlideUpAndShowItem
+         * is called inside the PartPicker.js Component.
+      */}
         <PartPicker
             val1Change={(value) => this.part1ValueChange(value)}
             val2Change={(value) => this.part2ValueChange(value)}
@@ -63,13 +66,19 @@ export default class MischungsrechnerContent extends Component {
             part2Value={this.state.part2Value}
             onClose={this._animateResult}
         />
-        <View style={styles.hr} />
-        <BottlePicker
+        <SlideUpAndShowItem delay={100}>
+          <View style={styles.hr} />
+        </SlideUpAndShowItem>
+        <SlideUpAndShowItem delay={150}>
+          <BottlePicker
             onClose={this._animateResult}
             bottlePickerValueChange={this.bottlePickerValueChange}
             bottleValue={this.state.bottleValue}
-            />
-        <Result startAnim={this.state.animRes} result={calc[0]} onPress={() => this._animateResult()}/>
+          />
+        </SlideUpAndShowItem>
+        <SlideUpAndShowItem delay={200}>
+          <Result startAnim={this.state.animRes} result={calc[0]} />
+        </SlideUpAndShowItem>
       </View>
     );
   }

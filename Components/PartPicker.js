@@ -9,6 +9,7 @@ import {
 import OverViewItem from './OverviewItem';
 import ModalPicker from './ModalPicker';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SlideUpAndShowItem from './SlideUpAndShowItem';
 
 const part1Values = [
   {value:'', label:'eigene...'},
@@ -61,18 +62,18 @@ export default class PartPicker extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <OverViewItem
+        <SlideUpAndShowItem delay={0}><OverViewItem
           title='1. Teil'
           subtitle='Produkt'
           onPress={() => this.setState({modalVisible1: true})}
           value={this.state.part1Value}
-        />
-        <OverViewItem
+        /></SlideUpAndShowItem>
+        <SlideUpAndShowItem delay={50}><OverViewItem
           title='2. Teil'
           subtitle='Wasser'
           onPress={() => this.setState({modalVisible2: true})}
           value={this.state.part2Value}
-        />
+        /></SlideUpAndShowItem>
         <ModalPicker
         title='Meistens ist hiermit das Produkt bzw. das erste Mischungsverhältnis gemeint.'
         subTitle='1:4 = 1 Teil Produkt, 4 Teile Wasser.'
