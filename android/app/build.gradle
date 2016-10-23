@@ -11,7 +11,7 @@ def getNPMVersion() {
 def getGitVersion() {
     def counter = 27
     def process = "git rev-list master --first-parent --count".execute()
-    return process.text.toInteger()
+    return process.text.toInteger() + 27
 }
 
 apply from: "../../node_modules/react-native/react.gradle"
