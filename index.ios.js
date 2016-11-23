@@ -1,39 +1,28 @@
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  Text,
-  View,
-  NavigatorIOS
-} from 'react-native';
+import React from 'react'
+import { AppRegistry, NavigatorIOS } from 'react-native'
 
-import HelpView from './Components/HelpView';
-import DefaultView from './Components/MainView';
+import HelpView from './Components/HelpView'
+import DefaultView from './Components/MainView'
 
 const MischungsrechnerApp = React.createClass({
-  onRightButtonPress: function() {
+  onRightButtonPress: function () {
     this.refs.nav.push({
       title: 'Hilfe',
       component: HelpView
-    });
+    })
   },
-  render: function() {
+  render: function () {
     return (
-        <NavigatorIOS
-            ref='nav'
-            style={{flex: 1}}
-            barTintColor='#44bcff'
-            tintColor='#585858'
-            titleTextColor='#585858'
-            itemWrapperStyle={{backgroundColor: '#fbfbfb', padding: 10,}}
-            initialRoute={{
-              title: 'Mischungsrechner',
-              component: DefaultView,
-              rightButtonTitle: 'Hilfe',
-              onRightButtonPress: this.onRightButtonPress
-            }}
-        />
-    );
+      <NavigatorIOS
+        ref='nav'
+        style={{flex: 1}}
+        barTintColor='#44bcff'
+        tintColor='#585858'
+        titleTextColor='#585858'
+        itemWrapperStyle={{backgroundColor: '#fbfbfb', padding: 10}}
+        initialRoute={{ title: 'Mischungsrechner', component: DefaultView, rightButtonTitle: 'Hilfe', onRightButtonPress: this.onRightButtonPress }} />
+    )
   }
-});
+})
 
-AppRegistry.registerComponent('MischungsrechnerApp', () => MischungsrechnerApp);
+AppRegistry.registerComponent('MischungsrechnerApp', () => MischungsrechnerApp)
