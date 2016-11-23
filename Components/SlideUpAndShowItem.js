@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {
-  View
+  View // eslint-disable-line no-unused-vars
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 

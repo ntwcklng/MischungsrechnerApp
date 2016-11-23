@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import React, { Component } from 'react'
+import { Text, View, ScrollView } from 'react-native'
 
 export default class HelpView extends Component {
   render () {
@@ -21,6 +21,6 @@ export default class HelpView extends Component {
           </Text>
         </ScrollView>
       </View>
-    );
+    )
   }
 }
