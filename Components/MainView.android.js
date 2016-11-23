@@ -1,25 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  Keyboard,
-} from 'react-native';
+  ScrollView
+} from 'react-native'
 
-import MischungsrechnerContent from './MischungsrechnerContent';
+import MischungsrechnerContent from './MischungsrechnerContent'
 
 export default class DefaultView extends Component {
 
-  render() {
+  render () {
     return (
-      <View style={{flex:1, padding: 10,}}>
+      <View style={{flex: 1, padding: 10 }}>
         <ScrollView ref='scrollView'>
           <Text style={styles.textHeader}>Mischungsrechner</Text>
           <MischungsrechnerContent navigator={this.props.navigator} />
         </ScrollView>
       </View>
-    );
+    )
   }
 };
 const styles = StyleSheet.create({
@@ -28,6 +27,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#44bcff',
     textAlign: 'center',
-    marginVertical: 7,
+    marginVertical: 7
   }
-});
+})
